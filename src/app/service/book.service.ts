@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import {Book} from '../model/model';
-import {ConfigService} from '../config.service';
+import { Book } from '../model/model';
+import { ConfigService } from '../config.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -18,20 +18,14 @@ export class BookService {
   getBooks(): Observable<any> {
     return this.httpClient.get (
       this.BOOKS_API_URL,
-      {
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application-json')
-      }
+      httpOptions
     );
   }
 
-  getBook(_id): Observable<any> {
+  getBook(id: string): Observable<any> {
     return this.httpClient.get (
-      this.BOOKS_API_URL + '/' + _id,
-      {
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application-json')
-      }
+      `${this.BOOKS_API_URL}/${id}`,
+      httpOptions
     );
   }
 
@@ -39,31 +33,22 @@ export class BookService {
     return this.httpClient.post(
       this.BOOKS_API_URL,
       book,
-      {
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application-json')
-      }
+      httpOptions
     );
   }
 
   putBook(book: Book): Observable<any> {
     return this.httpClient.put(
-      this.BOOKS_API_URL + '/' + book._id,
+      `${this.BOOKS_API_URL}/${book._id}`,
       book,
-      {
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application-json')
-      }
+      httpOptions
     );
   }
 
-  deleteBook(_id): Observable<any> {
+  deleteBook(id: string): Observable<any> {
     return this.httpClient.delete(
-      this.BOOKS_API_URL + '/' + _id,
-      {
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application-json')
-      }
+      `${this.BOOKS_API_URL}/${id}`,
+      httpOptions
     );
   }
 }

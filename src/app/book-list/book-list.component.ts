@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {BookService} from '../service/book.service';
-import {Book} from '../model/model';
-import {Observable} from 'rxjs/Observable';
+import { Book } from '../model/model';
+import { BookService } from '../service/book.service';
 
 @Component({
   selector: 'app-book-list',
@@ -9,16 +8,16 @@ import {Observable} from 'rxjs/Observable';
   styleUrls: ['./book-list.component.scss']
 })
 export class BookListComponent implements OnInit {
-  books: Array<Book> = [];
+  books: Array<Book>;
 
   constructor(private bookService: BookService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.bookService.getBooks()
       .subscribe(books => this.books = books.books,
         error => {
-          console.error("Error: " + error);
+          console.error(`Error: ${error}`);
         }
-      )
+      );
   }
 }

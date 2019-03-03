@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Book} from '../model/model';
-import {BookService} from '../service/book.service';
-import {Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { Book } from '../model/model';
+import { BookService } from '../service/book.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-book',
@@ -13,13 +13,13 @@ export class AddBookComponent {
 
   constructor(private bookService: BookService, private router: Router) { }
 
-  onSubmit() {
+  onSubmit(): void {
     this.bookService.postBook(this.book)
-      .subscribe(data => {
+      .subscribe(() => {
         this.router.navigate(['/']);
       },
       error => {
-        console.error('Error: ' + error.toString());
+        console.error(`Error: ${error.toString()}`);
       }
     );
   }

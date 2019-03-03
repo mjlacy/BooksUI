@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {Book} from '../model/model';
-import {BookService} from '../service/book.service';
-import {Router} from '@angular/router';
-import {Observable} from 'rxjs/Observable';
+import { Book } from '../model/model';
+import { BookService } from '../service/book.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-book',
@@ -11,33 +10,28 @@ import {Observable} from 'rxjs/Observable';
   styleUrls: ['./edit-book.component.scss']
 })
 export class EditBookComponent implements OnInit {
-  //bookId: any;
   book = new Book();
-  sub: any;
+
   constructor(private route: ActivatedRoute, private bookService: BookService, private router: Router) { }
 
-  ngOnInit() {
-    this.sub =  this.route.params.subscribe(params => {
-      this.bookService.getBook(params['_id'])
-        .subscribe(book => this.book = book,
-          error => {
-            console.error("Error: " + error);
-        })
-    });
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('_id');
+
+    this.bookService.getBook(id)
+      .subscribe(book => this.book = book,
+        error => {
+          console.error(`Error: ${error}`);
+        });
   }
 
-  ngOnDestroy(){
-    this.sub.unsubscribe();
-  }
-
-  onSubmit() {
+  onSubmit(): void {
     this.bookService.putBook(this.book)
-      .subscribe(data => {
-          this.router.navigate(["/"]);
+      .subscribe(() => {
+          this.router.navigate(['/']);
         },
         error => {
-          console.error("Error: " + error);
+          console.error(`Error: ${error}`);
         }
-      )
+      );
   }
 }

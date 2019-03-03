@@ -10,8 +10,8 @@ export class ConfigService {
 
   load(): Promise<boolean> {
     return new Promise<boolean>(
-      (resolve: Function, reject: Function): void => {
-        this.http.get("../assets/config/config.json").subscribe(data => {
+      (resolve: (successful: boolean) => void, reject: () => void): void => {
+        this.http.get('../assets/config/config.json').subscribe(data => {
           this.config = data;
           resolve(true);
         }, err => {
