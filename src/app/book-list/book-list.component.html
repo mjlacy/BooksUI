@@ -1,0 +1,32 @@
+<!--<ul>-->
+  <!--<li><a [routerLink]="['addBook']" routerLinkActive="active">Add Book</a></li><br>-->
+<!--</ul>-->
+<br>
+<div class="container">
+  <a class="btn btn-primary button" [routerLink]="['addBook']" routerLinkActive="active">Add Book</a>
+</div><br>
+
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Book Id</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Year</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books">
+          <td>{{book.bookId}}</td>
+          <td>{{book.title}}</td>
+          <td>{{book.author}}</td>
+          <td>{{book.year}}</td>
+          <td><a class="btn btn-success button" [routerLink]="['editBook', book._id]" routerLinkActive="active">Edit</a></td>
+          <td><a class="btn btn-danger button" [routerLink]="['deleteBook', book._id]" routerLinkActive="active">Delete</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
