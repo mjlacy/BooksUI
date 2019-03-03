@@ -1,5 +1,5 @@
-import { Book } from '../model/model';
-import { ConfigService } from '../config.service';
+import { Book } from '../models/book.model';
+import { ConfigService } from './config.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';

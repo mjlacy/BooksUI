@@ -3,8 +3,8 @@
     <h2 align='center'>Are you sure you want to delete {{book.title}}?</h2><br>
     <div class="form-group" style='text-align: center; align-content: center'>
       <div class="buttons">
-        <button (click)="deleteBook()" type="submit" style="margin-right: 1%" class="btn btn-danger">Yes</button>
-        <button (click)="goHome()" type="button" class="btn btn-warning">No</button>
+        <button pButton class="ui-button-danger" label="Yes" style="margin-right: 1%" (click)="deleteBook()" type="submit"></button>
+        <button pButton class="ui-button-warning" label="No" (click)="goHome()" type="button"></button>
       </div>
     </div>
   </form>

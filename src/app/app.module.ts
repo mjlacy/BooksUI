@@ -6,11 +6,15 @@ import { AddBookComponent } from './add-book/add-book.component';
 import { EditBookComponent } from './edit-book/edit-book.component';
 import { DeleteBookComponent } from './delete-book/delete-book.component';
 import { AppRoutingModule } from './app-routing.module';
-import { BookService } from './service/book.service';
-import { ConfigService } from './config.service';
+import { BookService } from './services/book.service';
+import { ConfigService } from './services/config.service';
 import { appInitializerFactory } from './app-initalizer-factory';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import {TableModule} from 'primeng/table';
+import {ButtonModule} from 'primeng/button';
+import {GrowlModule} from 'primeng/growl';
+import {GrowlService} from './services/growl.service';
 
 @NgModule({
   declarations: [
@@ -24,11 +28,15 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    TableModule,
+    ButtonModule,
+    GrowlModule
   ],
   providers: [
     BookService,
     ConfigService,
+    GrowlService,
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializerFactory,

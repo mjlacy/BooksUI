@@ -1,11 +1,11 @@
 <br>
 <div class="container">
-  <a class="btn btn-primary button" [routerLink]="['addBook']" routerLinkActive="active">Add Book</a>
+  <p-button label="Add Book" [routerLink]="['addBook']" routerLinkActive="active"></p-button>
 </div><br>
 
 <div class="container">
-  <table class="table">
-    <thead>
+  <p-table [value]="books">
+    <ng-template pTemplate="header">
       <tr>
         <th>Book Id</th>
         <th>Title</th>
@@ -14,16 +14,16 @@
         <th>Edit</th>
         <th>Delete</th>
       </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let book of books">
+    </ng-template>
+    <ng-template pTemplate="body" let-book>
+      <tr>
           <td>{{book.bookId}}</td>
           <td>{{book.title}}</td>
           <td>{{book.author}}</td>
           <td>{{book.year}}</td>
-          <td><a class="btn btn-success button" [routerLink]="['editBook', book._id]" routerLinkActive="active">Edit</a></td>
-          <td><a class="btn btn-danger button" [routerLink]="['deleteBook', book._id]" routerLinkActive="active">Delete</a></td>
+        <td><button pButton class="ui-button-success" label="Edit" [routerLink]="['editBook', book._id]" routerLinkActive="active"></button></td>
+        <td><button pButton class="ui-button-danger" label="Delete" [routerLink]="['deleteBook', book._id]" routerLinkActive="active"></button></td>
       </tr>
-    </tbody>
-  </table>
+    </ng-template>
+  </p-table>
 </div>
