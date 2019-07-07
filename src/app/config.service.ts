@@ -5,8 +5,7 @@ import {HttpClient} from '@angular/common/http';
 export class ConfigService {
   public config: any = undefined;
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   load(): Promise<boolean> {
     return new Promise<boolean>(

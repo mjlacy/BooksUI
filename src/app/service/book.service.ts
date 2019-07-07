@@ -11,7 +11,6 @@ const httpOptions = {
 @Injectable()
 export class BookService {
   private readonly BOOKS_API_URL = this.configService.config.url;
-  book: Book;
 
   constructor(private httpClient: HttpClient, private configService: ConfigService) {}
 
