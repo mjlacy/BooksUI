@@ -1,11 +1,10 @@
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { BookListComponent } from './book-list.component';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { BookService } from '../service/book.service';
-import { of } from 'rxjs';
-import { Book } from '../model/model';
+import { BooksService } from '../service/books.service';
+import { of, throwError } from 'rxjs';
+import { Book } from '../models/book.model';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ConfigService } from '../config.service';
 import { By } from '@angular/platform-browser';
 import { Router, Routes } from '@angular/router';
 import { Location } from '@angular/common';
@@ -13,6 +12,8 @@ import { AddBookComponent } from '../add-book/add-book.component';
 import { EditBookComponent } from '../edit-book/edit-book.component';
 import { DeleteBookComponent } from '../delete-book/delete-book.component';
 import { FormsModule } from '@angular/forms';
+import { plainToClass } from 'class-transformer';
+import { HttpErrorResponse } from '@angular/common/http';
 
 describe('BookListComponent', () => {
   let component: BookListComponent;
@@ -39,16 +40,16 @@ describe('BookListComponent', () => {
         RouterTestingModule.withRoutes(routes)
       ],
       declarations: [ BookListComponent, AddBookComponent, EditBookComponent, DeleteBookComponent ],
-      providers : [ ConfigService,
-        { provide: BookService, useValue: mockBookService}
+      providers : [
+        { provide: BooksService, useValue: mockBookService}
       ]
     }).compileComponents();
   }));
 
   const mockBooks = {
     books : [
-      new Book('5a80868574fdd6de0f4fa438', 1, 'War and Peace', 'Leo Tolstoy', 1869),
-      new Book('5b4b793e90f24cb123c57ff5', 2, 'Lord of the Flies', 'William Golding', 1954)
+      plainToClass(Book, {_id: '5a80868574fdd6de0f4fa438', bookId: 1, title: 'War and Peace', author: 'Leo Tolstoy', year: 1869}),
+      plainToClass(Book, {_id: '5b4b793e90f24cb123c57ff5', bookId: 2, title: 'Lord of the Flies', author: 'William Golding', year: 1954})
     ]
   };
 
@@ -72,6 +73,16 @@ describe('BookListComponent', () => {
     expect(component.getBooks).toHaveBeenCalled();
     expect(fixture.debugElement.queryAll(By.css('.btn-success')).length).toBe(2);
     expect(component.books.length).toEqual(2);
+  });
+
+  it('should write error to console if book loading fails', () => {
+    spyOn(console, 'log');
+    const returnedError = new HttpErrorResponse({status: 500, statusText: 'Internal Server Error'});
+    mockBookService.getBooks.and.returnValue(throwError(returnedError));
+
+    fixture.detectChanges();
+
+    expect(console.log).toHaveBeenCalledWith(returnedError);
   });
 
   it('should navigate to the add book page when the "Add Book" button is clicked',

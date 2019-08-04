@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Book } from '../model/model';
-import { BookService } from '../service/book.service';
+import { Book } from '../models/book.model';
+import { BooksService } from '../service/books.service';
+import { BooksResponse } from '../models/books-response.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-book-list',
@@ -10,7 +12,7 @@ import { BookService } from '../service/book.service';
 export class BookListComponent implements OnInit {
   books: Array<Book>;
 
-  constructor(private bookService: BookService) {}
+  constructor(private bookService: BooksService) {}
 
   ngOnInit(): void {
     this.getBooks();
@@ -18,9 +20,9 @@ export class BookListComponent implements OnInit {
 
   getBooks(): void {
     this.bookService.getBooks()
-      .subscribe(books => this.books = books.books,
-        error => {
-          console.error(`Error: ${error}`);
+      .subscribe((books: BooksResponse) => this.books = books.books,
+        (error: HttpErrorResponse) => {
+          console.log(error);
         }
       );
   }

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Book } from '../model/model';
-import { BookService } from '../service/book.service';
+import { Book } from '../models/book.model';
+import { BooksService } from '../service/books.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-book',
@@ -11,16 +12,16 @@ import { Router } from '@angular/router';
 export class AddBookComponent {
   book = new Book();
 
-  constructor(private bookService: BookService, private router: Router) { }
+  constructor(private bookService: BooksService, private router: Router) {}
 
   onSubmit(): void {
     this.bookService.postBook(this.book)
       .subscribe(() => {
         this.router.navigate(['/']);
       },
-      error => {
-        console.error(`Error: ${error.toString()}`);
-      }
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
     );
   }
 }

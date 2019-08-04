@@ -1,14 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddBookComponent } from './add-book.component';
-import { BookService } from '../service/book.service';
-import { RouterModule } from '@angular/router';
+import { BooksService } from '../service/books.service';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { Book } from '../models/book.model';
+import { of, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 describe('AddBookComponent', () => {
   let component: AddBookComponent;
   let fixture: ComponentFixture<AddBookComponent>;
   let mockBookService;
+  let router: Router;
 
   beforeEach(async(() => {
     mockBookService = jasmine.createSpyObj(['postBook']);
@@ -17,7 +21,7 @@ describe('AddBookComponent', () => {
       declarations: [ AddBookComponent ],
       imports: [RouterModule.forRoot([]), FormsModule, HttpClientTestingModule],
       providers : [
-        { provide: BookService, useValue: mockBookService}
+        { provide: BooksService, useValue: mockBookService}
       ]
     }).compileComponents();
   }));
@@ -25,7 +29,8 @@ describe('AddBookComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AddBookComponent);
     component = fixture.componentInstance;
-    mockBookService.postBook.and.returnValue(null);
+    router = TestBed.get(Router);
+    mockBookService.postBook.and.returnValue(of(new Book()));
     fixture.detectChanges();
   });
 
@@ -116,6 +121,42 @@ describe('AddBookComponent', () => {
       fixture.detectChanges();
       fixture.nativeElement.querySelector('button').click();
       expect(component.onSubmit).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it('should return to the home page after submitting a book', (done: DoneFn) => {
+    spyOn(router, 'navigate');
+
+    component.book.bookId = 0;
+    component.book.title = 'test';
+    component.book.author = 'tester';
+    component.book.year = 0;
+
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      fixture.nativeElement.querySelector('button').click();
+      expect(router.navigate).toHaveBeenCalledWith(['/']);
+      done();
+    });
+  });
+
+  it('should write error to console if book writing fails', (done: DoneFn) => {
+    spyOn(console, 'log');
+    const returnedError = new HttpErrorResponse({status: 500, statusText: 'Internal Server Error'});
+    mockBookService.postBook.and.returnValue(throwError(returnedError));
+
+    component.book.bookId = 0;
+    component.book.title = 'test';
+    component.book.author = 'tester';
+    component.book.year = 0;
+
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      fixture.nativeElement.querySelector('button').click();
+      expect(console.log).toHaveBeenCalledWith(returnedError);
       done();
     });
   });
