@@ -3,7 +3,7 @@ import { DeleteBookComponent } from './delete-book.component';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { BooksService } from '../service/books.service';
+import { BooksService } from '../services/books-service/books.service';
 import { of, throwError } from 'rxjs';
 import { Book } from '../models/book.model';
 import { By } from '@angular/platform-browser';

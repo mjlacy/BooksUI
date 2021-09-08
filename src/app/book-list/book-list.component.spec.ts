@@ -1,7 +1,7 @@
 import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { BookListComponent } from './book-list.component';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { BooksService } from '../service/books.service';
+import { BooksService } from '../services/books-service/books.service';
 import { of, throwError } from 'rxjs';
 import { Book } from '../models/book.model';
 import { RouterTestingModule } from '@angular/router/testing';

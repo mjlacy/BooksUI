@@ -1,9 +1,9 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { BooksService } from './books.service';
 import { plainToClass } from 'class-transformer';
-import { BooksResponse } from '../models/books-response.model';
+import { BooksResponse } from '../../models/books-response.model';
 import { TestBed } from '@angular/core/testing';
-import { Book } from '../models/book.model';
+import { Book } from '../../models/book.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 describe('BooksService', () => {

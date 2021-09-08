@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Book } from '../models/book.model';
-import { BooksService } from '../service/books.service';
+import { BooksService } from '../services/books-service/books.service';
 import { BooksResponse } from '../models/books-response.model';
 import { HttpErrorResponse } from '@angular/common/http';
 

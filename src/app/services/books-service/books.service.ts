@@ -1,9 +1,9 @@
-import { Book } from '../models/book.model';
+import { Book } from '../../models/book.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { BooksResponse } from '../models/books-response.model';
+import { environment } from '../../../environments/environment';
+import { BooksResponse } from '../../models/books-response.model';
 import { first, map } from 'rxjs/operators';
 import { plainToClass } from 'class-transformer';
 
