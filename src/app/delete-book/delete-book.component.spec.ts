@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DeleteBookComponent } from './delete-book.component';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -18,12 +18,12 @@ describe('DeleteBookComponent', () => {
   let router: Router;
   let mockBookService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     mockBookService = jasmine.createSpyObj(['getBook', 'deleteBook']);
 
     TestBed.configureTestingModule({
       declarations: [ DeleteBookComponent ],
-      imports: [RouterModule.forRoot([]), FormsModule, HttpClientTestingModule],
+      imports: [RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }), FormsModule, HttpClientTestingModule],
       providers : [
         { provide: BooksService, useValue: mockBookService}
       ]

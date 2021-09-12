@@ -1,4 +1,4 @@
-import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
 import { BookListComponent } from './book-list.component';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { BooksService } from '../services/books-service/books.service';
@@ -30,7 +30,7 @@ describe('BookListComponent', () => {
     { path: '**', component: BookListComponent }
   ];
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     mockBookService = jasmine.createSpyObj(['getBooks']);
 
     TestBed.configureTestingModule({
@@ -86,7 +86,7 @@ describe('BookListComponent', () => {
   });
 
   it('should navigate to the add book page when the "Add Book" button is clicked',
-    async(inject([Location], (location: Location) => {
+    waitForAsync(inject([Location], (location: Location) => {
       fixture.detectChanges();
 
       fixture.debugElement.query(By.css('.btn-primary')).nativeElement.click();
@@ -98,7 +98,7 @@ describe('BookListComponent', () => {
   );
 
   it('should navigate to the edit page when the edit button of a book is clicked',
-    async(inject([Location], (location: Location) => {
+    waitForAsync(inject([Location], (location: Location) => {
       fixture.detectChanges();
 
       fixture.debugElement.queryAll(By.css('.btn-success'))[0].nativeElement.click();
@@ -110,7 +110,7 @@ describe('BookListComponent', () => {
   );
 
   it('should navigate to the delete page when the delete button of a book is clicked',
-    async(inject([Location], (location: Location) => {
+    waitForAsync(inject([Location], (location: Location) => {
       fixture.detectChanges();
 
       fixture.debugElement.queryAll(By.css('.btn-danger'))[0].nativeElement.click();

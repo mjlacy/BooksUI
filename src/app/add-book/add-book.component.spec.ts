@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AddBookComponent } from './add-book.component';
 import { BooksService } from '../services/books-service/books.service';
 import { Router, RouterModule } from '@angular/router';
@@ -14,12 +14,12 @@ describe('AddBookComponent', () => {
   let mockBookService;
   let router: Router;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     mockBookService = jasmine.createSpyObj(['postBook']);
 
     TestBed.configureTestingModule({
       declarations: [ AddBookComponent ],
-      imports: [RouterModule.forRoot([]), FormsModule, HttpClientTestingModule],
+      imports: [RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }), FormsModule, HttpClientTestingModule],
       providers : [
         { provide: BooksService, useValue: mockBookService}
       ]
